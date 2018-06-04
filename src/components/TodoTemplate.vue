@@ -7,7 +7,7 @@
           id="input-todo"
           class="form-control input-lg"
           placeholder="What needs to be done?"
-          v-model="newTodo"
+          v-model="value"
           @keyup.enter="addTodo"
         />
         <ul class="nav nav-xs nav-pills">
@@ -16,13 +16,13 @@
           </li>
         </ul>
         <ul class="list-group">
-          <li class="list-group-item" v-for="todo in filteredTodos" :key=todo.id>
+          <li class="list-group-item" v-for="todo in filteredTodos" :key="todo.id">
             <div class="hover-anchor">
               <a class="hover-action text-muted">
                 <span class="glyphicon glyphicon-remove-circle pull-right" />
               </a>
               <label class="i-checks">
-                <input type="checkbox" v-model=todo.completed />
+                <input type="checkbox" v-model="todo.completed" />
                 <i />
                 <span>{{ todo.content }}</span>
               </label>
@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      newTodo: '',
+      value: '',
       todos: [],
       navs: ['all', 'active', 'completed'],
       visibility: 'all'
@@ -77,11 +77,11 @@ export default {
       ];
     },
     addTodo() {
-      const content = this.newTodo.trim();
-      if (!content) return;
-      // this.todos = [{ id: this.getMaxIds(), content, completed: false }, ...this.todos];
-      this.todos.unshift({ id: this.getMaxIds(), content, completed: false });
-      this.newTodo = '';
+      if (!this.value.trim()) return;
+      const content = this.value.trim();
+      const newTodo = { id: this.getMaxIds(), content, completed: false };
+      this.todos = [newTodo, ...this.todos];
+      this.value = '';
     },
     filterTodos(nav) {
       this.visibility = nav;
