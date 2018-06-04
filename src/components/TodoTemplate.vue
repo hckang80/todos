@@ -11,18 +11,12 @@
           @keyup.enter="addTodo"
         />
         <ul class="nav nav-xs nav-pills">
-          <li class="active">
-            <a>all</a>
-          </li>
-          <li>
-            <a>active</a>
-          </li>
-          <li>
-            <a>completed</a>
+          <li :class="{ active: nav === visibility }" v-for="(nav, index) in navs" :key="index">
+            <a href="#" @click.prevent="filterTodos(nav)">{{ nav }}</a>
           </li>
         </ul>
         <ul class="list-group">
-          <li class="list-group-item" v-for="todo in todos" :key=todo.id>
+          <li class="list-group-item" v-for="todo in filteredTodos" :key=todo.id>
             <div class="hover-anchor">
               <a class="hover-action text-muted">
                 <span class="glyphicon glyphicon-remove-circle pull-right" />
@@ -63,11 +57,9 @@ export default {
   data() {
     return {
       newTodo: '',
-      todos: [
-        { id: 3, content: 'JavaScript', completed: true },
-        { id: 2, content: 'CSS', completed: false },
-        { id: 1, content: 'HTML', completed: false },
-      ]
+      todos: [],
+      navs: ['all', 'active', 'completed'],
+      visibility: 'all'
     }
   },
   methods: {
@@ -77,16 +69,37 @@ export default {
     getMaxIds() {
       return this.todos.length ? Math.max(...this.getIds()) + 1 : 1;
     },
+    getTodos() {
+      this.todos = [
+        { id: 3, content: 'JavaScript', completed: true },
+        { id: 2, content: 'CSS', completed: false },
+        { id: 1, content: 'HTML', completed: false },
+      ];
+    },
     addTodo() {
       const content = this.newTodo.trim();
       if (!content) return;
       // this.todos = [{ id: this.getMaxIds(), content, completed: false }, ...this.todos];
       this.todos.unshift({ id: this.getMaxIds(), content, completed: false });
       this.newTodo = '';
-    } 
+    },
+    filterTodos(nav) {
+      this.visibility = nav;
+    }
+  },
+  computed: {
+    filteredTodos() {
+      if (this.visibility === 'all') {
+        return this.todos;
+      } else if (this.visibility === 'active') {
+        return this.todos.filter(todo => !todo.completed);
+      } else if (this.visibility === 'completed') {
+        return this.todos.filter(todo => todo.completed);
+      }
+    }
   },
   mounted() {
-    // console.log(this.getMaxIds());
+    this.getTodos();
   }
 }
 </script>
