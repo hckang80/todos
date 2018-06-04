@@ -7,6 +7,8 @@
           id="input-todo"
           class="form-control input-lg"
           placeholder="What needs to be done?"
+          v-model="newTodo"
+          @keyup.enter="addTodo"
         />
         <ul class="nav nav-xs nav-pills">
           <li class="active">
@@ -20,39 +22,15 @@
           </li>
         </ul>
         <ul class="list-group">
-          <li class="list-group-item">
+          <li class="list-group-item" v-for="todo in todos" :key=todo.id>
             <div class="hover-anchor">
               <a class="hover-action text-muted">
                 <span class="glyphicon glyphicon-remove-circle pull-right" />
               </a>
               <label class="i-checks">
-                <input type="checkbox" />
+                <input type="checkbox" v-model=todo.completed />
                 <i />
-                <span>HTML</span>
-              </label>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="hover-anchor">
-              <a class="hover-action text-muted">
-                <span class="glyphicon glyphicon-remove-circle pull-right" />
-              </a>
-              <label class="i-checks">
-                <input type="checkbox" />
-                <i />
-                <span>CSS</span>
-              </label>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="hover-anchor">
-              <a class="hover-action text-muted">
-                <span class="glyphicon glyphicon-remove-circle pull-right" />
-              </a>
-              <label class="i-checks">
-                <input type="checkbox" />
-                <i />
-                <span>JavaScript</span>
+                <span>{{ todo.content }}</span>
               </label>
             </div>
           </li>
@@ -72,6 +50,7 @@
         </div>
       </div>
     </div>
+    <pre>{{ JSON.stringify(todos) }}</pre>
   </div>
 </template>
 
@@ -79,7 +58,35 @@
 export default {
   name: 'TodoTemplate',
   props: {
-    msg: String
+    // newTodo: String
+  },
+  data() {
+    return {
+      newTodo: '',
+      todos: [
+        { id: 3, content: 'JavaScript', completed: true },
+        { id: 2, content: 'CSS', completed: false },
+        { id: 1, content: 'HTML', completed: false },
+      ]
+    }
+  },
+  methods: {
+    getIds() {
+      return this.todos.map(todo => todo.id);
+    },
+    getMaxIds() {
+      return this.todos.length ? Math.max(...this.getIds()) + 1 : 1;
+    },
+    addTodo() {
+      const content = this.newTodo.trim();
+      if (!content) return;
+      // this.todos = [{ id: this.getMaxIds(), content, completed: false }, ...this.todos];
+      this.todos.unshift({ id: this.getMaxIds(), content, completed: false });
+      this.newTodo = '';
+    } 
+  },
+  mounted() {
+    // console.log(this.getMaxIds());
   }
 }
 </script>
