@@ -10,8 +10,8 @@ export const store = new Vuex.Store({
     visibility: 'all'
   },
   mutations: {
-    getTodos() {
-      this.state.todos = [
+    getTodos(state) {
+      state.todos = [
         { id: 3, content: 'JavaScript', completed: true },
         { id: 2, content: 'CSS', completed: false },
         { id: 1, content: 'HTML', completed: false }
