@@ -44,62 +44,44 @@
         </div>
       </div>
     </div>
-    <pre>{{ JSON.stringify(todos) }}</pre>
+    <pre>{{ JSON.stringify($store.state.todos) }}</pre>
   </div>
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
+
 export default {
   name: 'TodoTemplate',
-  props: {
-    // newTodo: String
-  },
   data() {
     return {
-      value: '',
-      todos: [],
-      navs: ['all', 'active', 'completed'],
-      visibility: 'all'
+      value: ''
     }
   },
   methods: {
-    getIds() {
-      return this.todos.map(todo => todo.id);
-    },
-    getMaxIds() {
-      return this.todos.length ? Math.max(...this.getIds()) + 1 : 1;
-    },
-    getTodos() {
-      this.todos = [
-        { id: 3, content: 'JavaScript', completed: true },
-        { id: 2, content: 'CSS', completed: false },
-        { id: 1, content: 'HTML', completed: false },
-      ];
-    },
     addTodo() {
       if (!this.value.trim()) return;
       const content = this.value.trim();
-      const newTodo = { id: this.getMaxIds(), content, completed: false };
-      this.todos = [newTodo, ...this.todos];
+      this.$store.commit('addTodo', content);
       this.value = '';
     },
-    filterTodos(nav) {
-      this.visibility = nav;
+    filterTodos(navStatus) {
+      this.$store.commit('filterTodos', navStatus);
     }
   },
   computed: {
-    filteredTodos() {
-      if (this.visibility === 'all') {
-        return this.todos;
-      } else if (this.visibility === 'active') {
-        return this.todos.filter(todo => !todo.completed);
-      } else if (this.visibility === 'completed') {
-        return this.todos.filter(todo => todo.completed);
-      }
-    }
+    ...mapGetters([
+      'navs'  
+    ]),
+    ...mapGetters([
+      'visibility'  
+    ]),
+    ...mapGetters([
+      'filteredTodos'  
+    ])
   },
   mounted() {
-    this.getTodos();
+    this.$store.commit('getTodos');
   }
 }
 </script>
