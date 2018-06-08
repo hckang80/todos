@@ -3,13 +3,7 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <h1 class="title">Todos</h1>
-        <input
-          id="input-todo"
-          class="form-control input-lg"
-          placeholder="What needs to be done?"
-          v-model="value"
-          @keyup.enter="addTodo"
-        />
+        <Form/>
         <ul class="nav nav-xs nav-pills">
           <li :class="{ active: nav === visibility }" v-for="(nav, index) in navs" :key="index">
             <a href="#" @click.prevent="filterTodos(nav)">{{ nav }}</a>
@@ -50,20 +44,10 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
+import Form from './Form'
 
 export default {
-  data() {
-    return {
-      value: ''
-    }
-  },
   methods: {
-    addTodo() {
-      if (!this.value.trim()) return;
-      const content = this.value.trim();
-      this.$store.commit('addTodo', content);
-      this.value = '';
-    },
     filterTodos(navStatus) {
       this.$store.commit('filterTodos', navStatus);
     }
@@ -81,6 +65,9 @@ export default {
   },
   mounted() {
     this.$store.commit('getTodos');
+  },
+  components: {
+    Form
   }
 }
 </script>
