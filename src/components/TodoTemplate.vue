@@ -4,11 +4,7 @@
       <div class="col-md-8 col-md-offset-2">
         <h1 class="title">Todos</h1>
         <Form/>
-        <ul class="nav nav-xs nav-pills">
-          <li :class="{ active: nav === visibility }" v-for="(nav, index) in navs" :key="index">
-            <a href="#" @click.prevent="filterTodos(nav)">{{ nav }}</a>
-          </li>
-        </ul>
+        <Nav/>
         <ul class="list-group">
           <li class="list-group-item" v-for="todo in filteredTodos" :key="todo.id">
             <div class="hover-anchor">
@@ -45,20 +41,10 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import Form from './Form'
+import Nav from './Nav'
 
 export default {
-  methods: {
-    filterTodos(navStatus) {
-      this.$store.commit('filterTodos', navStatus);
-    }
-  },
   computed: {
-    ...mapGetters([
-      'navs'  
-    ]),
-    ...mapGetters([
-      'visibility'  
-    ]),
     ...mapGetters([
       'filteredTodos'  
     ])
@@ -67,7 +53,8 @@ export default {
     this.$store.commit('getTodos');
   },
   components: {
-    Form
+    Form,
+    Nav
   }
 }
 </script>
