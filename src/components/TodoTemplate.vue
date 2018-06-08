@@ -6,19 +6,7 @@
         <Form/>
         <Nav/>
         <TodoList/>
-        <div class="col-xs-6">
-          <label class="i-checks">
-            <input type="checkbox" />
-            <i />
-            <span>Mark all as complete</span>
-          </label>
-        </div>
-        <div class="col-xs-6 text-right">
-          <button class="btn btn-default btn-xs">
-            Clear completed (<span>0</span>)
-          </button>
-          <strong>0</strong> item left
-        </div>
+        <TodoFooter/>
       </div>
     </div>
     <pre>{{ JSON.stringify($store.state.todos) }}</pre>
@@ -30,6 +18,7 @@ import { mapMutations, mapGetters } from 'vuex'
 import Form from './Form'
 import Nav from './Nav'
 import TodoList from './TodoList'
+import TodoFooter from './TodoFooter'
 
 export default {
   mounted() {
@@ -38,7 +27,8 @@ export default {
   components: {
     Form,
     Nav,
-    TodoList
+    TodoList,
+    TodoFooter
   }
 }
 </script>
