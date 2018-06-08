@@ -18,10 +18,7 @@ export const store = new Vuex.Store({
       ];
     },
     addTodo(state, content) {
-      const getMaxIds = state.todos.length
-        ? Math.max(...state.todos.map(todo => todo.id)) + 1
-        : 1;
-      const payload = { id: getMaxIds, content, completed: false };
+      const payload = { id: this.getters.getMaxIds, content, completed: false };
       state.todos = [payload, ...state.todos];
     },
     filterTodos(state, navStatus) {
@@ -41,6 +38,12 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    getIds(state) {
+      return state.todos.map(todo => todo.id);
+    },
+    getMaxIds(state, getters) {
+      return state.todos.length ? Math.max(...getters.getIds) + 1 : 1;
+    },
     navs(state) {
       return state.navs;
     },
