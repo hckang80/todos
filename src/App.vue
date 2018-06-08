@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TodoTemplate from './components/TodoTemplate.vue'
+import TodoTemplate from './components/TodoTemplate'
 
 export default {
   components: {
