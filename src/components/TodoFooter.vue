@@ -26,9 +26,9 @@ export default {
     }
   },
   methods: {
-    toggleTodosCompleted(completed) {
-      this.$store.commit('toggleTodosCompleted', completed);
-    },
+    ...mapMutations([
+      'toggleTodosCompleted'
+    ]),
     ...mapMutations([
       'clearTodoCompleted'
     ])

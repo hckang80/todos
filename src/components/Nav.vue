@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   methods: {
-    filterTodos(navStatus) {
-      this.$store.commit('filterTodos', navStatus);
-    }
+    ...mapMutations([
+      'filterTodos'
+    ])
   },
   computed: {
     ...mapGetters([

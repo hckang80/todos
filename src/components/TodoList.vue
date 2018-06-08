@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   methods: {
-    deleteTodo(id) {
-      this.$store.commit('deleteTodo', id);
-    }
+    ...mapMutations([
+      'deleteTodo'
+    ])
   },
   computed: {
     ...mapGetters([
