@@ -5,20 +5,7 @@
         <h1 class="title">Todos</h1>
         <Form/>
         <Nav/>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="todo in filteredTodos" :key="todo.id">
-            <div class="hover-anchor">
-              <a class="hover-action text-muted">
-                <span class="glyphicon glyphicon-remove-circle pull-right" />
-              </a>
-              <label class="i-checks">
-                <input type="checkbox" v-model="todo.completed" />
-                <i />
-                <span>{{ todo.content }}</span>
-              </label>
-            </div>
-          </li>
-        </ul>
+        <TodoList/>
         <div class="col-xs-6">
           <label class="i-checks">
             <input type="checkbox" />
@@ -42,19 +29,16 @@
 import { mapMutations, mapGetters } from 'vuex'
 import Form from './Form'
 import Nav from './Nav'
+import TodoList from './TodoList'
 
 export default {
-  computed: {
-    ...mapGetters([
-      'filteredTodos'  
-    ])
-  },
   mounted() {
     this.$store.commit('getTodos');
   },
   components: {
     Form,
-    Nav
+    Nav,
+    TodoList
   }
 }
 </script>
