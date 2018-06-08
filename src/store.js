@@ -29,6 +29,15 @@ export const store = new Vuex.Store({
     },
     deleteTodo(state, id) {
       state.todos = state.todos.filter(todo => todo.id !== id);
+    },
+    toggleTodosCompleted(state, completed) {
+      state.todos = state.todos.map(todo =>
+        Object.assign({}, todo, { completed })
+      );
+    },
+    clearTodoCompleted(state) {
+      if (!this.getters.leftTodoLength) return;
+      state.todos = state.todos.filter(todo => !todo.completed);
     }
   },
   getters: {
@@ -46,6 +55,12 @@ export const store = new Vuex.Store({
       } else if (state.visibility === 'completed') {
         return state.todos.filter(todo => todo.completed);
       }
+    },
+    completedTodoLength(state) {
+      return state.todos.filter(todo => todo.completed).length;
+    },
+    leftTodoLength(state) {
+      return state.todos.filter(todo => !todo.completed).length;
     }
   }
 });
