@@ -26,6 +26,9 @@ export const store = new Vuex.Store({
     },
     filterTodos(state, navStatus) {
       state.visibility = navStatus;
+    },
+    deleteTodo(state, id) {
+      state.todos = state.todos.filter(todo => todo.id !== id);
     }
   },
   getters: {

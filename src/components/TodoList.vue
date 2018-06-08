@@ -2,7 +2,7 @@
   <ul class="list-group">
     <li class="list-group-item" v-for="todo in filteredTodos" :key="todo.id">
       <div class="hover-anchor">
-        <a class="hover-action text-muted">
+        <a class="hover-action text-muted" @click.prevent="deleteTodo(todo.id)">
           <span class="glyphicon glyphicon-remove-circle pull-right" />
         </a>
         <label class="i-checks">
@@ -19,6 +19,11 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  methods: {
+    deleteTodo(id) {
+      this.$store.commit('deleteTodo', id);
+    }
+  },
   computed: {
     ...mapGetters([
       'filteredTodos'
