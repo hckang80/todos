@@ -8,7 +8,6 @@
 import TodoTemplate from './components/TodoTemplate.vue'
 
 export default {
-  name: 'app',
   components: {
     TodoTemplate
   }

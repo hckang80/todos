@@ -52,7 +52,6 @@
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  name: 'TodoTemplate',
   data() {
     return {
       value: ''
