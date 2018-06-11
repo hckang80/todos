@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -10,12 +11,13 @@ export const store = new Vuex.Store({
     visibility: 'all'
   },
   mutations: {
-    getTodos(state) {
-      state.todos = [
-        { id: 3, content: 'JavaScript', completed: true },
-        { id: 2, content: 'CSS', completed: false },
-        { id: 1, content: 'HTML', completed: false }
-      ];
+    getTodos(state, todos) {
+      // state.todos = [
+      //   { id: 3, content: 'JavaScript', completed: true },
+      //   { id: 2, content: 'CSS', completed: false },
+      //   { id: 1, content: 'HTML', completed: false }
+      // ];
+      state.todos = todos;
     },
     addTodo(state, content) {
       const payload = { id: this.getters.getMaxIds, content, completed: false };
@@ -64,6 +66,15 @@ export const store = new Vuex.Store({
     },
     leftTodoLength(state) {
       return state.todos.filter(todo => !todo.completed).length;
+    }
+  },
+  actions: {
+    getTodos({ commit }) {
+      const baseURI = 'http://localhost:4500';
+      axios.get(`${baseURI}/todos`).then(result => {
+        const { data } = result;
+        return commit('getTodos', data);
+      });
     }
   }
 });
