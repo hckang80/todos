@@ -22,7 +22,7 @@ import TodoFooter from './TodoFooter'
 
 export default {
   mounted() {
-    this.$store.commit('getTodos');
+    this.$store.dispatch('getTodos');
   },
   components: {
     Form,
