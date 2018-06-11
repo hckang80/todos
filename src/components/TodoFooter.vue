@@ -27,17 +27,13 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'toggleTodosCompleted'
-    ]),
-    ...mapMutations([
+      'toggleTodosCompleted',
       'clearTodoCompleted'
     ])
   },
   computed: {
     ...mapGetters([
-      'completedTodoLength'
-    ]),
-    ...mapGetters([
+      'completedTodoLength',
       'leftTodoLength'
     ])
   }

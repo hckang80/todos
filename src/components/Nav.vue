@@ -17,10 +17,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'navs'  
-    ]),
-    ...mapGetters([
-      'visibility'  
+      'navs',
+      'visibility'
     ])
   },
 }
